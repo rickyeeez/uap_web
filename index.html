@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+        }
+        table,td,th {
+            border: 1px solid;
+        }
+        table{
+            margin-bottom: 20px;
+        }
+        button{
+            width: 80px;
+            height: 40px;
+            border: none;
+            background-color: blue;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover{
+            color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <table id="data_barang" style="width: fit-content; border: 1px solid;">
+        <tr>
+            <th width="50px">Kode</th>
+            <th width="70px">Barang</th>
+            <th width="50px" >Harga</th>
+        </tr>
+    </table>
+    <table style="width: fit-content;"> 
+        <tr>
+            <td>Masukkan Kode</td>
+            <td>:</td>
+            <td><input type="number" id="kode_barang"></td>
+        </tr>
+        <tr>
+            <td>Banyaknya Barang</td>
+            <td>:</td>
+            <td><input type="number" id="jumlah_barang"></td>
+        </tr>
+        <tr style="display: flex; flex-direction: column;">
+            <td style="border: none;"><button onclick="sumData()" >Submit</button></td>
+        </tr>
+    </table>
+    <script>
+        const data = document.getElementById("data_barang");
+        var listBarang = [
+            {"kode_barang" : "001",
+            "nama_barang": "Barang A",
+            "harga": 10000},
+            {"kode_barang" : "002",
+            "nama_barang": "Barang B",
+            "harga": 20000},
+            {"kode_barang" : "003",
+            "nama_barang": "Barang C",
+            "harga": 30000}
+        ]
+        listBarang.forEach(element => {
+        data.innerHTML = data.innerHTML+ "<tr>\
+            <td>"+element["kode_barang"] + "</td>\
+            <td>"+element["nama_barang"] + "</td>\
+            <td>"+element["harga"] + "</td>\
+            </tr>"
+        })
+        function getDataByElement(kode){
+            var returns;
+            listBarang.forEach(element => {
+                if(element["kode_barang"] === kode){
+                    returns = element   
+                }
+            });
+
+            return returns;
+            
+        }
+        function sumData(){
+            var kode_barang = document.getElementById("kode_barang").value;
+            var jumlah_barang = document.getElementById("jumlah_barang").value;
+            var data_barang = getDataByElement(kode_barang);
+            if(data_barang != null){
+                var harga_barang =  data_barang['harga'] * parseInt(jumlah_barang)
+                alert("Total Pembayaran Adalah "  + harga_barang)
+                var uang_user = prompt("Masukkan uang user : ")
+                if(uang_user >= harga_barang){
+                    alert("Kembalian : " + (uang_user - harga_barang))
+                }else{
+                    alert("Uang tidak cukup")
+                }
+            }else{
+                console.log("gagal")
+            }
+        }
+    </script>
+</body>
+</html>
